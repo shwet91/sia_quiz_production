@@ -723,7 +723,7 @@ const HormonalHealthQuiz: React.FC = () => {
     <div className="space-y-6">
       <div className="text-center">
         <Mail className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Let's get your personalized results!</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Let&aposs get your personalized results!</h2>
         <p className="text-gray-600">Enter your details to receive your assessment and next steps</p>
       </div>
       
@@ -786,7 +786,7 @@ const HormonalHealthQuiz: React.FC = () => {
         <div className="space-y-8 text-center">
           <Loader2 className="w-16 h-16 text-pink-500 mx-auto animate-spin" />
           <h2 className="text-2xl font-bold text-gray-800">Processing your assessment...</h2>
-          <p className="text-gray-600">We're analyzing your responses and preparing your personalized results.</p>
+          <p className="text-gray-600">We&aposre analyzing your responses and preparing your personalized results.</p>
         </div>
       );
     }
@@ -834,7 +834,7 @@ const HormonalHealthQuiz: React.FC = () => {
         {(pcosMatch || answers.serverPcosRisk) && (
           <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
             <h4 className="font-semibold text-blue-800 mb-2">PCOS Assessment Note:</h4>
-            <p className="text-blue-700">Your symptoms meet at least 2 of the 3 signs commonly used to assess PCOS. Let's help you get a proper workup and plan.</p>
+            <p className="text-blue-700">Your symptoms meet at least 2 of the 3 signs commonly used to assess PCOS. Let&aposs help you get a proper workup and plan.</p>
           </div>
         )}
         

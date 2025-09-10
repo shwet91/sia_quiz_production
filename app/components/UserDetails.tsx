@@ -221,11 +221,11 @@ function PersonalDetails() {
 
       {/* Main Form Container */}
       <motion.div
-        className="  bg-gradient-to-br from-white to-orange-50 rounded-2xl sm:rounded-3xl shadow-xl border border-orange-100 relative overflow-hidden"
+        className=" px-2 md:bg-white  bg-gradient-to-br from-white to-orange-50 md:to-white rounded-2xl sm:rounded-3xl md:rounded-none shadow-xl md:shadow-none md:border-none border border-orange-100 relative overflow-hidden"
         variants={itemVariants}
       >
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/5 pointer-events-none" />
+        <div className=" md:hidden absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/5 pointer-events-none" />
 
         <div className="  md:flex justify-center gap-3 relative z-10">
           {/* Form Grid Layout */}

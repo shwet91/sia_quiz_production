@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface initialState {
   userDetails: userDetails;
@@ -23,7 +23,14 @@ const initialState: initialState = {
 const quizSlice = createSlice({
   name: "quiz",
   initialState,
-  reducers: {},
+  reducers: {
+    updateCurrentQuestionIndex: (state, action: PayloadAction<number>) => {
+      state.currentQuestionIndex = action.payload;
+      console.log("recived in payload :" , action.payload);
+    },
+  },
 });
+
+export const { updateCurrentQuestionIndex } = quizSlice.actions;
 
 export default quizSlice.reducer;

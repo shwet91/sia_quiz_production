@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import "../../styles/design.css";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,9 +8,17 @@ import { motion } from "framer-motion";
 import UserDetails from "@/app/components/UserDetails";
 import QuestionTab, { Question } from "@/app/components/QuestionTab";
 import { questions } from "@/app/lib/questions";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 function QuizPage() {
   console.log("this is the debugger print :", questions[1]);
+  const currentIndex = useSelector(
+    (store: RootState) => store.quiz.currentQuestionIndex
+  );
+  useEffect(() => {
+    console.log("this is logged in main page :", currentIndex);
+  }, [currentIndex]);
 
   return (
     <div className="light-orange min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200">
@@ -138,7 +146,12 @@ function QuizPage() {
             className="  w-full 1lg:w-2/3 1min-h-[300px] bg-gradient-to-br  to-white rounded-2xl p-1 1shadow-lg "
           >
             {/* UserDetails component will be uncommented and rendered here */}
-            <UserDetails></UserDetails>
+            {currentIndex === 69 ? (
+              <QuestionTab question={questions[0] as Question}></QuestionTab>
+            ) : (
+              <UserDetails></UserDetails>
+            )}
+            {/* <UserDetails></UserDetails> */}
             {/* <QuestionTab question={questions[0] as Question}></QuestionTab> */}
           </motion.div>
 

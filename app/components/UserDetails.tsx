@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useDebugValue, useState } from "react";
 import "../styles/design.css";
+import { updateCurrentQuestionIndex } from "../store/quizSlice";
+import { useDispatch, UseDispatch } from "react-redux";
 
 interface UserDetails {
   name: string;
@@ -22,6 +24,8 @@ function PersonalDetails() {
     age: "",
     gender: "",
   });
+
+  const dispatch = useDispatch();
 
   // Loading state for form submission
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,6 +92,7 @@ function PersonalDetails() {
 
       // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
+      dispatch(updateCurrentQuestionIndex(69));
 
       // Handle success - redirect to next step or show success message
       console.log("Details submitted successfully!");
@@ -297,7 +302,6 @@ function PersonalDetails() {
                   </motion.div>
                 )}
               </div>
-
             </motion.div>
 
             {/* Age Field */}
@@ -329,7 +333,6 @@ function PersonalDetails() {
                   </motion.div>
                 )}
               </div>
-
             </motion.div>
 
             {/* Gender Selection - Full Width */}
@@ -395,7 +398,6 @@ function PersonalDetails() {
                   )}
                 </motion.button>
               </div>
-
             </motion.div>
 
             {/* Submit Button */}
@@ -453,7 +455,6 @@ function PersonalDetails() {
               </motion.button>
             </motion.div>
           </div>
-
         </div>
       </motion.div>
 

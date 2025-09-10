@@ -118,7 +118,7 @@ function PersonalDetails() {
       details.name.trim() !== "" &&
       details.email.trim() !== "" &&
       details.age.trim() !== "" &&
-      details.gender !== ""
+      details.gender === ""
     );
   };
 
@@ -221,22 +221,21 @@ function PersonalDetails() {
 
       {/* Main Form Container */}
       <motion.div
-        className=" px-2 md:bg-white  bg-gradient-to-br from-white to-orange-50 md:to-white rounded-2xl sm:rounded-3xl md:rounded-none shadow-xl md:shadow-none md:border-none border border-orange-100 relative overflow-hidden"
+        className=" py-5 px-3 md:bg-white  bg-gradient-to-br from-white to-orange-50 md:to-white rounded-2xl sm:rounded-3xl md:rounded-none shadow-xl md:shadow-none md:border-none border border-orange-100 relative overflow-hidden"
         variants={itemVariants}
       >
         {/* Subtle background pattern */}
-        <div className=" md:hidden absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/5 pointer-events-none" />
+        <div className="  md:hidden absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/5 pointer-events-none" />
 
         <div className="  md:flex justify-center gap-3 relative z-10">
           {/* Form Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-2 mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 mb-0">
             {/* Name Field */}
             <motion.div className="space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">{fieldConfig.name.icon}</span>
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.name.label}{" "}
-                  <span className="text-orange-500">*</span>
+              
                 </label>
               </div>
               <div className="relative">
@@ -248,18 +247,15 @@ function PersonalDetails() {
                   onChange={(e) => inputHandler("name", e.target.value)}
                 />
               </div>
-              {/* <p className="text-xs text-gray-500">
-                {fieldConfig.name.helpText}
-              </p> */}
+
             </motion.div>
 
             {/* Email Field */}
             <motion.div className="space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">{fieldConfig.email.icon}</span>
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.email.label}{" "}
-                  <span className="text-orange-500">*</span>
+               
                 </label>
               </div>
               <div className="relative">
@@ -279,7 +275,6 @@ function PersonalDetails() {
             {/* Phone Field */}
             <motion.div className="space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">{fieldConfig.phoneNo.icon}</span>
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.phoneNo.label}
                 </label>
@@ -307,10 +302,10 @@ function PersonalDetails() {
             {/* Age Field */}
             <motion.div className="space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-2xl">{fieldConfig.age.icon}</span>
+                {/* <span className="text-2xl">{fieldConfig.age.icon}</span> */}
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.age.label}{" "}
-                  <span className="text-orange-500">*</span>
+          
                 </label>
               </div>
               <div className="relative">
@@ -336,12 +331,12 @@ function PersonalDetails() {
             </motion.div>
 
             {/* Gender Selection - Full Width */}
-            <motion.div className="  space-y-1 mb-2" variants={itemVariants}>
+            <motion.div className=" hidden space-y-1 mb-2" variants={itemVariants}>
               <div className="  flex items-center justify-center space-x-2 1mb-4">
-                <span className="text-2xl">{fieldConfig.gender.icon}</span>
+                {/* <span className="text-2xl">{fieldConfig.gender.icon}</span> */}
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.gender.label}{" "}
-                  <span className="text-orange-500">*</span>
+                  {/* <span className="text-orange-500">*</span> */}
                 </label>
               </div>
 
@@ -359,7 +354,7 @@ function PersonalDetails() {
                   whileTap="tap"
                 >
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-2xl">👨</span>
+                    {/* <span className="text-2xl">👨</span> */}
                     <span>Male</span>
                   </div>
                   {details.gender === "male" && (
@@ -385,7 +380,7 @@ function PersonalDetails() {
                   whileTap="tap"
                 >
                   <div className="flex items-center justify-center space-x-2">
-                    <span className="text-2xl">👩</span>
+                    {/* <span className="text-2xl">👩</span> */}
                     <span>Female</span>
                   </div>
                   {details.gender === "female" && (
@@ -400,9 +395,12 @@ function PersonalDetails() {
               </div>
             </motion.div>
 
+          </div>
+
+          
             {/* Submit Button */}
             <motion.div
-              className=" mt-6 sm:mb-0 mb-4 flex justify-center"
+              className=" mt-6 sm:mb-0 mb-4 flex justify-center md:items-end md:ml-10 "
               variants={itemVariants}
             >
               <motion.button
@@ -454,7 +452,6 @@ function PersonalDetails() {
                 )}
               </motion.button>
             </motion.div>
-          </div>
         </div>
       </motion.div>
 

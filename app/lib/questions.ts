@@ -1,7 +1,35 @@
 export const questions = [
   {
+    id: 0,
+    question: "What is your Gender?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Male",
+        next: 1,
+        priority: 0,
+      },
+      {
+        answer: "Femail",
+        next: 1,
+        priority: 0,
+      },
+      {
+        answer: "Other",
+        next: 1,
+        priority: 0,
+      },
+      {
+        answer: "Prefer not to say",
+        next: 1,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
     id: 1,
-    question: "What brings you here today?",
+    question: "1What brings you here today?",
     type: "multiSelection",
     // renderingConditionType : "simple",
     // renderingCondition : [],

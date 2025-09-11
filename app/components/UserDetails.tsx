@@ -364,11 +364,27 @@ function PersonalDetails() {
               <div className="flex w-full ">
                 {/* Country Code Input */}
                 <input
-                  type="text"
+                  type="tel"
                   value={details.countryCode || "+91"}
+                  onKeyDown={(e) => {
+                    // Allow control keys: backspace, delete, arrows, tab
+                    const allowedKeys = [
+                      "Backspace",
+                      "Delete",
+                      "ArrowLeft",
+                      "ArrowRight",
+                      "Tab",
+                    ];
+
+                    if (allowedKeys.includes(e.key)) return;
+
+                    // Block if not a digit
+                    if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+                  }}
                   onChange={(e) => {
                     const value = e.target.value;
-                    if (value.length > 3) return;
+                    // if (/[^0-9]/.test(value)) return;
+                    if (value.length > 4) return;
                     value.concat();
                     inputHandler("countryCode", e.target.value);
                     console.log("country code :", value.length);
@@ -376,15 +392,14 @@ function PersonalDetails() {
                   onBlur={() => validateInput("partialSubmit")}
                   className=" w-20 sm:w-17 text-gray-800  text-base sm:text-lg border-2 border-orange-200 
                  focus:border-orange-400 1focus:ring-4 focus:ring-orange-100 
-                 p-4 rounded-l-xl transition-all duration-300 outline-none 
+                 p-1 rounded-l-xl transition-all duration-300 outline-none 
                  bg-white shadow-sm hover:border-orange-300 focus:shadow-lg"
                 />
 
                 {/* Phone Number Input */}
                 <input
                   type="tel"
-                  // placeholder={fieldConfig.phoneNo.placeholder}
-
+                  placeholder={fieldConfig.phoneNo.placeholder}
                   className=" w-30 sm:w-15 flex-1 text-gray-800 text-base sm:text-lg border-2 border-l-0 border-orange-200 
                  focus:border-orange-400 focus:ring-4 focus:ring-orange-100 
                  p-4 rounded-r-xl transition-all duration-300 outline-none 

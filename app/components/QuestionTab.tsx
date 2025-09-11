@@ -233,13 +233,14 @@ function QuestionTab({
         </div>
       </div>
 
-      <button
+      {/* <button
         onClick={() => {
           console.log("userDetails :", userDetails);
         }}
       >
         Click me
-      </button>
+      </button> */}
+      
     </div>
   );
 }

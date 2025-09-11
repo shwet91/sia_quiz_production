@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserDetails } from "../components/UserDetails";
 
 interface initialState {
-  userDetails: userDetails;
+  userDetails: UserDetails;
   answers: string[];
   currentQuestionIndex: number;
   personalisedResponse: string;
@@ -11,9 +12,10 @@ const initialState: initialState = {
   userDetails: {
     name: "",
     email: "",
-    phone: null,
-    gender: null,
-    age: null,
+    phoneNo: "",
+    gender: "",
+    age: "",
+    countryCode: "",
   },
   answers: [],
   currentQuestionIndex: 0,
@@ -26,11 +28,14 @@ const quizSlice = createSlice({
   reducers: {
     updateCurrentQuestionIndex: (state, action: PayloadAction<number>) => {
       state.currentQuestionIndex = action.payload;
-      console.log("recived in payload :" , action.payload);
+      console.log("recived in payload :", action.payload);
+    },
+    updateUserDetails: (state, action: PayloadAction<UserDetails>) => {
+      state.userDetails = action.payload
     },
   },
 });
 
-export const { updateCurrentQuestionIndex } = quizSlice.actions;
+export const { updateCurrentQuestionIndex , updateUserDetails } = quizSlice.actions;
 
 export default quizSlice.reducer;

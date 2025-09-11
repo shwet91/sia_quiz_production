@@ -2,13 +2,13 @@
 
 import React, { useDebugValue, useEffect, useState } from "react";
 import "../styles/design.css";
-import { updateCurrentQuestionIndex } from "../store/quizSlice";
-import { useDispatch, UseDispatch } from "react-redux";
+import { updateCurrentQuestionIndex , updateUserDetails } from "../store/quizSlice";
+import { useDispatch } from "react-redux";
 import { motion, Variants } from "framer-motion";
 import "../styles/design.css";
 import z from "zod";
 
-interface UserDetails {
+export interface UserDetails {
   name: string;
   email: string;
   phoneNo: string;
@@ -151,6 +151,7 @@ function PersonalDetails() {
     try {
       // Add your server submission logic here
       console.log("Submitting user details:", details);
+      dispatch(updateUserDetails(details))
 
       // Example API call (uncomment when ready):
       // const response = await fetch('/api/user-details', {

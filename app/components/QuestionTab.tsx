@@ -1,6 +1,8 @@
 import { div } from "framer-motion/client";
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 type Answer = {
   answer: string;
@@ -120,6 +122,8 @@ function QuestionTab({
     },
   };
 
+  const userDetails = useSelector((store: RootState) => store.quiz.userDetails);
+
   // Calculate form completion percentage
   const getCompletionPercentage = () => {
     const requiredFields = ["name", "email", "age", "gender"];
@@ -228,6 +232,14 @@ function QuestionTab({
           </button>
         </div>
       </div>
+
+      <button
+        onClick={() => {
+          console.log("userDetails :", userDetails);
+        }}
+      >
+        Click me
+      </button>
     </div>
   );
 }

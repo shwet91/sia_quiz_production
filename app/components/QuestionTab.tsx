@@ -1,5 +1,5 @@
 import { div } from "framer-motion/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
@@ -114,32 +114,38 @@ function QuestionTab({
   question: Question;
 }) {
   const [currentSelectedAnswers, setCurrentSelecetedAnswers] = useState<
-    string[]
+    Answer[]
   >([]);
 
   const [next, setNext] = useState<number>(0);
 
   const userDetails = useSelector((store: RootState) => store.quiz.userDetails);
 
-  const answerSelector = (ans: Answer) => {
-    console.log("selected answer :", ans);
+  const nextBtnHandler = () => {};
 
+  const answerSelector = (ans: Answer) => {
     // set the answer
     if (question.type === "multiSelection") {
       setCurrentSelecetedAnswers((prev) => {
-        if (prev.includes(ans.answer)) {
-          return prev.filter((e) => e !== ans.answer);
+        if (prev.includes(ans)) {
+          return prev.filter((e) => e !== ans);
         } else {
-          return [...prev, ans.answer];
+          return [...prev, ans];
         }
       });
     } else {
-      setCurrentSelecetedAnswers([ans.answer]);
+      setCurrentSelecetedAnswers([ans]);
     }
-
-    // set the next question
-
   };
+
+  useEffect(() => {
+    // set the next question
+    const priorities = currentSelectedAnswers.map((e) => e.priority);
+    const maxPriority = Math.max(...priorities);
+    currentSelectedAnswers.forEach((e) => {
+      if (e.priority === maxPriority) setNext(e.next);
+    });
+  }, [currentSelectedAnswers]);
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -217,7 +223,7 @@ function QuestionTab({
                         {/* Checkbox inner circle - you'll control this visibility with your logic */}
                         <div
                           className={` w-3 h-3 bg-orange-500 rounded-sm ${
-                            currentSelectedAnswers.includes(ans.answer)
+                            currentSelectedAnswers.includes(ans)
                               ? ""
                               : "opacity-0"
                           } `}
@@ -254,7 +260,10 @@ function QuestionTab({
           </button>
 
           {/* Next Button */}
-          <button className="group w-full sm:w-auto px-10 py-3 sm:py-4 rounded-xl font-bold text-base bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg min-w-32 relative overflow-hidden">
+          <button
+            onClick={nextBtnHandler}
+            className="group w-full sm:w-auto px-10 py-3 sm:py-4 rounded-xl font-bold text-base bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg min-w-32 relative overflow-hidden"
+          >
             <span className="flex items-center justify-center space-x-2 relative z-10">
               <span>Next</span>
               <span className="group-hover:translate-x-1 transition-transform duration-200">
@@ -271,6 +280,7 @@ function QuestionTab({
       <button
         onClick={() => {
           console.log("answers :", currentSelectedAnswers);
+          console.log("next :", next);
         }}
       >
         Click me

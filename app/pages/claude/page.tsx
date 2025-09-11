@@ -34,16 +34,16 @@ function QuizPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="  w-full h-16 md:h-20 flex justify-between items-center px-4 md:px-6 py-3 border-b border-orange-50 bg-gradient-to-r from-white to-orange-50"
+          className=" overflow-hidden w-full h-16 md:h-20 flex justify-between items-center px-4 md:px-6 py-3 border-b border-orange-50 bg-gradient-to-r from-white to-orange-50"
         >
           {/* Logo section with hover animation */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            className="w-32 md:w-55 h-12 md:h-12 relative rounded-lg overflow-hidden shadow-sm"
+            className="w-32 md:w-32 h-12 md:h-32 relative rounded-lg overflow-hidden shadow-sm"
           >
             <Image
-              src="/logo.jpeg"
+              src="/logo2.jpeg"
               alt="logo"
               fill={true}
               className="object-cover"

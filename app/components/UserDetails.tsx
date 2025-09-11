@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useDebugValue, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import "../styles/design.css";
 import { updateCurrentQuestionIndex } from "../store/quizSlice";
 import { useDispatch, UseDispatch } from "react-redux";
+import { motion, Variants } from "framer-motion";
+import "../styles/design.css";
+import z from "zod";
 
 interface UserDetails {
   name: string;
@@ -13,11 +16,31 @@ interface UserDetails {
   gender: string;
 }
 
-import { motion, Variants } from "framer-motion";
-import "../styles/design.css";
+type SubmitType = "partialSubmit" | "finalSubmit";
+
+const userDetailsSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters long"),
+  email: z.email("Invalid email address"),
+  phoneNo: z
+    .string()
+    .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+  age: z.string().refine(
+    (val) => {
+      const num = Number(val);
+      return num >= 18 && num <= 100;
+    },
+    { message: "Age must be between 18 and 100" }
+  ),
+
+  gender: z.enum(["male", "female", ""], {
+    error: "Gender is required",
+  }),
+});
+
+export type UserDetailsSchema = z.infer<typeof userDetailsSchema>;
 
 function PersonalDetails() {
-  const [details, setDetails] = useState<UserDetails>({
+  const [details, setDetails] = useState<UserDetailsSchema>({
     name: "",
     email: "",
     phoneNo: "",
@@ -28,6 +51,9 @@ function PersonalDetails() {
   const dispatch = useDispatch();
 
   // Loading state for form submission
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof UserDetailsSchema, string>>
+  >({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Enhanced field configurations with icons and validation
@@ -74,8 +100,49 @@ function PersonalDetails() {
     },
   };
 
+  const btnHandler = () => {
+    const result = userDetailsSchema.safeParse(details);
+    console.log("errors :", errors);
+    console.log("result :", result);
+  };
+
+  // Check input validations
+  const validateInput = (submitType: SubmitType) => {
+    const result = userDetailsSchema.safeParse(details);
+    if (result.success) {
+      setErrors({});
+      return;
+    }
+
+    const fieldErrors: Partial<Record<keyof UserDetailsSchema, string>> = {};
+    result.error.issues.forEach((err) => {
+      const fieldName = err.path[0] as keyof UserDetailsSchema;
+      if (details[fieldName] === "") return;
+      // if (fieldName === "phoneNo" && details[fieldName] === "+91 ") return;
+      fieldErrors[fieldName] = err.message;
+    });
+    setErrors(fieldErrors);
+  };
+
   // Form submission handler
   const handleSubmit = async () => {
+    // Validate with Zod
+    const result = userDetailsSchema.safeParse(details);
+
+    if (!result.success) {
+      console.log("result failed", result);
+      const fieldErrors: Partial<Record<keyof UserDetailsSchema, string>> = {};
+      result.error.issues.forEach((err) => {
+        const fieldName = err.path[0] as keyof UserDetailsSchema;
+        fieldErrors[fieldName] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    // ✅ Validation passed
+    setErrors({});
+
     setIsSubmitting(true);
 
     try {
@@ -235,7 +302,6 @@ function PersonalDetails() {
               <div className="flex items-center space-x-2 mb-2">
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.name.label}{" "}
-              
                 </label>
               </div>
               <div className="relative">
@@ -244,18 +310,23 @@ function PersonalDetails() {
                   placeholder={fieldConfig.name.placeholder}
                   className="  w-full text-gray-800 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-4 rounded-xl transition-all duration-300 outline-none bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
                   value={details.name}
-                  onChange={(e) => inputHandler("name", e.target.value)}
+                  onChange={(e) => {
+                    inputHandler("name", e.target.value);
+                    // validateInput();
+                  }}
+                  onBlur={() => validateInput("partialSubmit")}
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name}</p>
+                )}
               </div>
-
             </motion.div>
 
             {/* Email Field */}
-            <motion.div className="space-y-3" variants={itemVariants}>
+            <motion.div className="space-y-3 " variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.email.label}{" "}
-               
                 </label>
               </div>
               <div className="relative">
@@ -264,8 +335,15 @@ function PersonalDetails() {
                   placeholder={fieldConfig.email.placeholder}
                   className=" w-full text-gray-800 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-4 rounded-xl transition-all duration-300 outline-none bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
                   value={details.email}
-                  onChange={(e) => inputHandler("email", e.target.value)}
+                  onChange={(e) => {
+                    inputHandler("email", e.target.value);
+                    // validateInput();
+                  }}
+                  onBlur={() => validateInput("partialSubmit")}
                 />
+                {errors.email && (
+                  <p className="text-red-500  text-sm">{errors.email}</p>
+                )}
               </div>
               {/* <p className="text-xs text-gray-500">
                 {fieldConfig.email.helpText}
@@ -285,16 +363,15 @@ function PersonalDetails() {
                   placeholder={fieldConfig.phoneNo.placeholder}
                   className="w-full text-gray-800 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-4 rounded-xl transition-all duration-300 outline-none bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
                   value={details.phoneNo}
-                  onChange={(e) => inputHandler("phoneNo", e.target.value)}
+                  onChange={(e) => {
+                    const number = e.target.value.replace(/\D/g, "");
+
+                    inputHandler("phoneNo", number);
+                  }}
+                  onBlur={() => validateInput("partialSubmit")}
                 />
-                {details.phoneNo && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-green-500 text-xl"
-                  >
-                    ✓
-                  </motion.div>
+                {errors.phoneNo && (
+                  <p className="text-red-500 text-sm">{errors.phoneNo}</p>
                 )}
               </div>
             </motion.div>
@@ -305,7 +382,6 @@ function PersonalDetails() {
                 {/* <span className="text-2xl">{fieldConfig.age.icon}</span> */}
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.age.label}{" "}
-          
                 </label>
               </div>
               <div className="relative">
@@ -314,24 +390,25 @@ function PersonalDetails() {
                   placeholder={fieldConfig.age.placeholder}
                   className="w-full text-gray-800 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-4 rounded-xl transition-all duration-300 outline-none bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
                   value={details.age}
-                  onChange={(e) => inputHandler("age", e.target.value)}
+                  onChange={(e) => {
+                    inputHandler("age", e.target.value);
+                    // validateInput();
+                  }}
+                  onBlur={() => validateInput("partialSubmit")}
                   min="1"
                   max="150"
                 />
-                {details.age && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-green-500 text-xl"
-                  >
-                    ✓
-                  </motion.div>
+                {errors.age && (
+                  <p className="text-red-500 text-sm">{errors.age}</p>
                 )}
               </div>
             </motion.div>
 
             {/* Gender Selection - Full Width */}
-            <motion.div className=" hidden space-y-1 mb-2" variants={itemVariants}>
+            <motion.div
+              className=" hidden space-y-1 mb-2"
+              variants={itemVariants}
+            >
               <div className="  flex items-center justify-center space-x-2 1mb-4">
                 {/* <span className="text-2xl">{fieldConfig.gender.icon}</span> */}
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
@@ -394,66 +471,63 @@ function PersonalDetails() {
                 </motion.button>
               </div>
             </motion.div>
-
           </div>
 
-          
-            {/* Submit Button */}
-            <motion.div
-              className=" mt-6 sm:mb-0 mb-4 flex justify-center md:items-end md:ml-10 "
-              variants={itemVariants}
+          {/* Submit Button */}
+          <motion.div
+            className=" mt-6 sm:mb-0 mb-4 flex justify-center md:items-end md:ml-10 "
+            variants={itemVariants}
+          >
+            <motion.button
+              type="button"
+              className={`  w-60 h-20  1px-12 1py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg relative overflow-hidden 1min-w-48 ${
+                isFormValid() && !isSubmitting
+                  ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+              onClick={handleSubmit}
+              disabled={!isFormValid() || isSubmitting}
+              variants={buttonVariants}
+              // whileHover={isFormValid() && !isSubmitting ? "hover" : undefined}
+              whileTap={isFormValid() && !isSubmitting ? "tap" : undefined}
             >
-              <motion.button
-                type="button"
-                className={`  w-60 h-20  1px-12 1py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg relative overflow-hidden 1min-w-48 ${
-                  isFormValid() && !isSubmitting
-                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
-                onClick={handleSubmit}
-                disabled={!isFormValid() || isSubmitting}
-                variants={buttonVariants}
-                whileHover={
-                  isFormValid() && !isSubmitting ? "hover" : undefined
-                }
-                whileTap={isFormValid() && !isSubmitting ? "tap" : undefined}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <motion.div
-                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
-                    <span>Processing...</span>
-                  </div>
-                ) : (
-                  <span className="  flex items-center justify-center 1space-x-2">
-                    <span>Start Health Quiz</span>
-                    <span>🚀</span>
-                  </span>
-                )}
-
-                {/* Button shine effect */}
-                {isFormValid() && !isSubmitting && (
+              {isSubmitting ? (
+                <div className="flex items-center justify-center space-x-2">
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"
-                    animate={{ x: ["-100%", "100%"] }}
+                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    animate={{ rotate: 360 }}
                     transition={{
-                      duration: 2,
+                      duration: 1,
                       repeat: Infinity,
-                      ease: "easeInOut",
+                      ease: "linear",
                     }}
                   />
-                )}
-              </motion.button>
-            </motion.div>
+                  <span>Processing...</span>
+                </div>
+              ) : (
+                <span className="  flex items-center justify-center 1space-x-2">
+                  <span>Start Health Quiz</span>
+                </span>
+              )}
+
+              {/* Button shine effect */}
+              {isFormValid() && !isSubmitting && (
+                <motion.div
+                  className=" hidden absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              )}
+            </motion.button>
+          </motion.div>
         </div>
       </motion.div>
+
+      {/* <button onClick={btnHandler}>click me</button> */}
 
       {/* Security and Privacy Message */}
       <motion.div className="  text-center mt-5" variants={itemVariants}>

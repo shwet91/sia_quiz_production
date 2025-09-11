@@ -3,6 +3,8 @@ export const questions = [
     id: 0,
     question: "What is your Gender?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Male",
@@ -29,10 +31,10 @@ export const questions = [
 
   {
     id: 1,
-    question: "1What brings you here today?",
+    question: "What brings you here today?",
     type: "multiSelection",
-    // renderingConditionType : "simple",
-    // renderingCondition : [],
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "I want to check if I have a hormonal imbalance",
@@ -86,6 +88,8 @@ export const questions = [
     id: 2,
     question: "What have you been diagnosed with?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "PCOS",

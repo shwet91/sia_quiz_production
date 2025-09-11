@@ -6,6 +6,7 @@ interface initialState {
   answers: string[];
   currentQuestionIndex: number;
   personalisedResponse: string;
+  currentComponent: "Details" | "Questions"
 }
 
 const initialState: initialState = {
@@ -20,6 +21,7 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
+  currentComponent: "Questions"
 };
 
 const quizSlice = createSlice({

@@ -12,7 +12,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 
 function QuizPage() {
-  console.log("this is the debugger print :", questions[1]);
+  const currentComponent = useSelector(
+    (store: RootState) => store.quiz.currentComponent
+  );
   const currentIndex = useSelector(
     (store: RootState) => store.quiz.currentQuestionIndex
   );
@@ -146,8 +148,8 @@ function QuizPage() {
             className="  w-full 1lg:w-2/3 1min-h-[300px] bg-gradient-to-br  to-white rounded-2xl p-1 1shadow-lg "
           >
             {/* UserDetails component will be uncommented and rendered here */}
-            {currentIndex === 69 ? (
-              <QuestionTab question={questions[0] as Question}></QuestionTab>
+            {currentComponent === "Questions" ? (
+              <QuestionTab question={questions[1] as Question}></QuestionTab>
             ) : (
               <UserDetails></UserDetails>
             )}

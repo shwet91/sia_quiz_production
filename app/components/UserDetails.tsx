@@ -14,6 +14,7 @@ interface UserDetails {
   phoneNo: string;
   age: string;
   gender: string;
+  countryCode: string;
 }
 
 type SubmitType = "partialSubmit" | "finalSubmit";
@@ -24,6 +25,7 @@ const userDetailsSchema = z.object({
   phoneNo: z
     .string()
     .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+  countryCode: z.string().min(2, "Please add a valid country code"),
   age: z.string().refine(
     (val) => {
       const num = Number(val);
@@ -31,7 +33,6 @@ const userDetailsSchema = z.object({
     },
     { message: "Age must be between 18 and 100" }
   ),
-
   gender: z.enum(["male", "female", ""], {
     error: "Gender is required",
   }),
@@ -46,6 +47,7 @@ function PersonalDetails() {
     phoneNo: "",
     age: "",
     gender: "",
+    countryCode: "+91",
   });
 
   const dispatch = useDispatch();
@@ -104,6 +106,7 @@ function PersonalDetails() {
     const result = userDetailsSchema.safeParse(details);
     console.log("errors :", errors);
     console.log("result :", result);
+    console.log("userDetails :", details);
   };
 
   // Check input validations
@@ -294,7 +297,7 @@ function PersonalDetails() {
         {/* Subtle background pattern */}
         <div className="  md:hidden absolute inset-0 bg-gradient-to-br from-orange-400/5 via-transparent to-orange-600/5 pointer-events-none" />
 
-        <div className="  md:flex justify-center gap-3 relative z-10">
+        <div className=" md:flex justify-center gap-3 relative z-10">
           {/* Form Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 mb-0">
             {/* Name Field */}
@@ -351,29 +354,56 @@ function PersonalDetails() {
             </motion.div>
 
             {/* Phone Field */}
-            <motion.div className="space-y-3" variants={itemVariants}>
+            <motion.div className="1space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.phoneNo.label}
                 </label>
               </div>
-              <div className="relative">
+
+              <div className="flex w-full ">
+                {/* Country Code Input */}
+                <input
+                  type="text"
+                  value={details.countryCode || "+91"}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length > 3) return;
+                    value.concat();
+                    inputHandler("countryCode", e.target.value);
+                    console.log("country code :", value.length);
+                  }}
+                  onBlur={() => validateInput("partialSubmit")}
+                  className=" w-20 text-gray-800 text-base sm:text-lg border-2 border-orange-200 
+                 focus:border-orange-400 1focus:ring-4 focus:ring-orange-100 
+                 p-4 rounded-l-xl transition-all duration-300 outline-none 
+                 bg-white shadow-sm hover:border-orange-300 focus:shadow-lg"
+                />
+
+                {/* Phone Number Input */}
                 <input
                   type="tel"
-                  placeholder={fieldConfig.phoneNo.placeholder}
-                  className="w-full text-gray-800 text-base sm:text-lg border-2 border-orange-200 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 p-4 rounded-xl transition-all duration-300 outline-none bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
+                  // placeholder={fieldConfig.phoneNo.placeholder}
+
+                  className=" flex-1 text-gray-800 text-base sm:text-lg border-2 border-l-0 border-orange-200 
+                 focus:border-orange-400 focus:ring-4 focus:ring-orange-100 
+                 p-4 rounded-r-xl transition-all duration-300 outline-none 
+                 bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
                   value={details.phoneNo}
                   onChange={(e) => {
-                    const number = e.target.value.replace(/\D/g, "");
-
+                    const number = e.target.value.replace(/\D/g, ""); // keep only digits
                     inputHandler("phoneNo", number);
                   }}
                   onBlur={() => validateInput("partialSubmit")}
                 />
-                {errors.phoneNo && (
-                  <p className="text-red-500 text-sm">{errors.phoneNo}</p>
-                )}
               </div>
+
+              {errors.phoneNo && (
+                <p className="text-red-500 text-sm">{errors.phoneNo}</p>
+              )}
+              {errors.countryCode && (
+                <p className="text-red-500 text-sm">{errors.countryCode}</p>
+              )}
             </motion.div>
 
             {/* Age Field */}
@@ -527,7 +557,7 @@ function PersonalDetails() {
         </div>
       </motion.div>
 
-      {/* <button onClick={btnHandler}>click me</button> */}
+      <button onClick={btnHandler}>click me</button>
 
       {/* Security and Privacy Message */}
       <motion.div className="  text-center mt-5" variants={itemVariants}>

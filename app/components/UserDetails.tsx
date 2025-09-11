@@ -354,7 +354,7 @@ function PersonalDetails() {
             </motion.div>
 
             {/* Phone Field */}
-            <motion.div className="1space-y-3" variants={itemVariants}>
+            <motion.div className=" 1space-y-3" variants={itemVariants}>
               <div className="flex items-center space-x-2 mb-2">
                 <label className="text-sm sm:text-base font-semibold text-gray-700">
                   {fieldConfig.phoneNo.label}
@@ -374,7 +374,7 @@ function PersonalDetails() {
                     console.log("country code :", value.length);
                   }}
                   onBlur={() => validateInput("partialSubmit")}
-                  className=" w-20 text-gray-800 text-base sm:text-lg border-2 border-orange-200 
+                  className=" w-20 sm:w-17 text-gray-800  text-base sm:text-lg border-2 border-orange-200 
                  focus:border-orange-400 1focus:ring-4 focus:ring-orange-100 
                  p-4 rounded-l-xl transition-all duration-300 outline-none 
                  bg-white shadow-sm hover:border-orange-300 focus:shadow-lg"
@@ -385,7 +385,7 @@ function PersonalDetails() {
                   type="tel"
                   // placeholder={fieldConfig.phoneNo.placeholder}
 
-                  className=" flex-1 text-gray-800 text-base sm:text-lg border-2 border-l-0 border-orange-200 
+                  className=" w-30 sm:w-15 flex-1 text-gray-800 text-base sm:text-lg border-2 border-l-0 border-orange-200 
                  focus:border-orange-400 focus:ring-4 focus:ring-orange-100 
                  p-4 rounded-r-xl transition-all duration-300 outline-none 
                  bg-white shadow-sm hover:border-orange-300 focus:shadow-lg placeholder-gray-400"
@@ -557,7 +557,7 @@ function PersonalDetails() {
         </div>
       </motion.div>
 
-      <button onClick={btnHandler}>click me</button>
+      {/* <button onClick={btnHandler}>click me</button> */}
 
       {/* Security and Privacy Message */}
       <motion.div className="  text-center mt-5" variants={itemVariants}>

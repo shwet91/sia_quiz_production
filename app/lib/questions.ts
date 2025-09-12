@@ -133,6 +133,8 @@ export const questions = [
     id: 3,
     question: "Do you experience any of the following hormonal health issues?",
     type: "multiSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "PCOS / PCOD",
@@ -186,6 +188,8 @@ export const questions = [
     id: 4,
     question: "Do any of these apply to you?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Diagnosed via ultrasound (cysts seen)",
@@ -220,6 +224,8 @@ export const questions = [
     question:
       "Have you ever been recommended a hormone test, thyroid test, or ultrasound?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Yes, and did the tests",
@@ -243,6 +249,8 @@ export const questions = [
     id: 6,
     question: "Do you experience any of these menstrual health symptoms?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Irregular cycles (<21 or >35 days)",
@@ -281,6 +289,8 @@ export const questions = [
     id: 7,
     question: "Do you experience any of these skin & hair symptoms?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Hormonal Acne",
@@ -304,6 +314,8 @@ export const questions = [
     id: 8,
     question: "Do you experience any of these energy & mood symptoms?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Constant fatigue / low energy",
@@ -327,6 +339,8 @@ export const questions = [
     id: 9,
     question: "Do you experience any of these weight & metabolism symptoms?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Sudden or stubborn weight gain",
@@ -355,6 +369,8 @@ export const questions = [
     id: 10,
     question: "Do you experience any of these sleep & body symptoms?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Trouble falling asleep",
@@ -393,148 +409,107 @@ export const questions = [
     id: 11,
     question: "How long have you been experiencing these symptoms?",
     type: "singleSelection",
+    renderingConditionType: "complex",
+    renderingCondition: [
+      "I am planning for pregnancy",
+      "I am currently pregnant and want to support my body",
+    ],
     options: [
       {
         answer: "Less than 3 months",
-        next: 11,
+        next: 12,
         priority: 0,
       },
       {
         answer: "3-12 months",
-        next: 11,
+        next: 12,
         priority: 0,
       },
       {
         answer: "1-3 years",
-        next: 11,
+        next: 12,
         priority: 0,
       },
       {
         answer: "More than 3 years",
-        next: 11,
+        next: 12,
         priority: 0,
       },
       {
         answer: "Can`t remember",
-        next: 11,
+        next: 12,
         priority: 0,
       },
       {
         answer: "Not Applicabl",
-        next: 11,
+        next: 12,
         priority: 0,
       },
     ],
   },
 
   {
-    id: 7,
-    question: "Do any of these apply?",
+    id: 12,
+    question: "What do you want support with during pregnancy?",
     type: "singleSelection",
-    options: [
-      {
-        answer: "Diagnosed via ultrasound (cysts seen)",
-        next: "",
-      },
-      {
-        answer: "High AMH",
-        next: "",
-      },
-      {
-        answer: "High androgens (acne/hair)",
-        next: "",
-      },
-      {
-        answer: "Diagnosed insulin resistance",
-        next: "",
-      },
-      {
-        answer: "Not sure",
-        next: "",
-      },
-    ],
-  },
-
-  {
-    id: "q8",
-    question: "Do any of these apply?",
-    type: "singleSelection",
-    options: [
-      {
-        answer: "Periods reducing in frequency",
-        next: "",
-      },
-      {
-        answer: "Hot flashes",
-        next: "",
-      },
-      {
-        answer: "Vaginal dryness/discomfort",
-        next: "",
-      },
-      {
-        answer: "Disturbed sleep",
-        next: "",
-      },
-      {
-        answer: "Periods stopped before age 40",
-        next: "",
-      },
-      {
-        answer: "Not sure",
-        next: "",
-      },
-    ],
-  },
-
-  {
-    id: "q9",
-    question: "What do you want support with?",
-    type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Nutrition in pregnancy",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
-        answer: "PCOS/thyroid management in pregnancy",
-        next: "",
+        answer: "PCOS / thyroid management in pregnancy",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "Healthy weight gain",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "Gut or digestion issues",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "Not sure",
-        next: "",
+        next: 13,
+        priority: 0,
       },
     ],
   },
 
   {
-    id: "q10",
-    question: "What do you want support with?",
+    id: 13,
+    question:
+      "Would you like a personalized summary or expert guidance based on your responses?",
     type: "singleSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Yes, book a free call",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "Yes, WhatsApp me",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "Maybe later",
-        next: "",
+        next: 13,
+        priority: 0,
       },
       {
         answer: "No thanks",
-        next: "",
+        next: 13,
+        priority: 0,
       },
     ],
   },

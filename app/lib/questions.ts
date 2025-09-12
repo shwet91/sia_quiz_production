@@ -390,6 +390,44 @@ export const questions = [
   },
 
   {
+    id: 11,
+    question: "How long have you been experiencing these symptoms?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Less than 3 months",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "3-12 months",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "1-3 years",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "More than 3 years",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Can`t remember",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Not Applicabl",
+        next: 11,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
     id: 7,
     question: "Do any of these apply?",
     type: "singleSelection",

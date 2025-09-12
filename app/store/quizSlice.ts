@@ -24,7 +24,7 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
-  currentComponent: "Questions",
+  currentComponent: "Details",
   questionFlow: [],
 };
 
@@ -53,6 +53,12 @@ const quizSlice = createSlice({
     removeQuestionFlow: (state) => {
       state.questionFlow.pop();
     },
+    updateCurrentComponent: (
+      state,
+      action: PayloadAction<"Details" | "Questions">
+    ) => {
+      state.currentComponent = action.payload;
+    },
   },
 });
 
@@ -63,6 +69,7 @@ export const {
   removeAnswer,
   updateQuestionFlow,
   removeQuestionFlow,
+  updateCurrentComponent,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

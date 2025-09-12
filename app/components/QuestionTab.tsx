@@ -269,7 +269,7 @@ function QuestionTab({
       <button
         className=""
         onClick={() => {
-          // console.log("answers :", savedAnswers);
+          console.log("answers :", savedAnswers);
           // console.log("current :", currentSelectedAnswers);
           console.log("flow :", quesstionFlow);
         }}

@@ -2,7 +2,7 @@
 
 import React, { useDebugValue, useEffect, useState } from "react";
 import "../styles/design.css";
-import { updateCurrentQuestionIndex , updateUserDetails } from "../store/quizSlice";
+import { updateCurrentComponent , updateUserDetails } from "../store/quizSlice";
 import { useDispatch } from "react-redux";
 import { motion, Variants } from "framer-motion";
 import "../styles/design.css";
@@ -163,7 +163,7 @@ function PersonalDetails() {
 
       // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      dispatch(updateCurrentQuestionIndex(69));
+      dispatch(updateCurrentComponent("Questions"));
 
       // Handle success - redirect to next step or show success message
       console.log("Details submitted successfully!");

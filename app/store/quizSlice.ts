@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserDetails } from "../components/UserDetails";
+import { number } from "zod";
+import { stat } from "fs";
 
 interface initialState {
   userDetails: UserDetails;
   answers: string[];
   currentQuestionIndex: number;
   personalisedResponse: string;
-  currentComponent: "Details" | "Questions"
+  currentComponent: "Details" | "Questions";
+  questionFlow: number[];
 }
 
 const initialState: initialState = {
@@ -21,7 +24,8 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
-  currentComponent: "Questions"
+  currentComponent: "Questions",
+  questionFlow: [],
 };
 
 const quizSlice = createSlice({
@@ -32,11 +36,33 @@ const quizSlice = createSlice({
       state.currentQuestionIndex = action.payload;
     },
     updateUserDetails: (state, action: PayloadAction<UserDetails>) => {
-      state.userDetails = action.payload
+      state.userDetails = action.payload;
+    },
+    updateAnswer: (state, action: PayloadAction<string>) => {
+      state.answers.push(action.payload);
+    },
+    removeAnswer: (state, action: PayloadAction<string>) => {
+      if (state.answers.includes(action.payload)) {
+        const newAnswers = state.answers.filter((e) => e !== action.payload);
+        state.answers = newAnswers;
+      }
+    },
+    updateQuestionFlow: (state, action: PayloadAction<number>) => {
+      state.questionFlow.push(action.payload);
+    },
+    removeQuestionFlow: (state) => {
+      state.questionFlow.pop();
     },
   },
 });
 
-export const { updateCurrentQuestionIndex , updateUserDetails } = quizSlice.actions;
+export const {
+  updateCurrentQuestionIndex,
+  updateUserDetails,
+  updateAnswer,
+  removeAnswer,
+  updateQuestionFlow,
+  removeQuestionFlow,
+} = quizSlice.actions;
 
 export default quizSlice.reducer;

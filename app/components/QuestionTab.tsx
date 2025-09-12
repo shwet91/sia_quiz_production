@@ -3,7 +3,13 @@ import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { updateCurrentQuestionIndex } from "../store/quizSlice";
+import {
+  updateCurrentQuestionIndex,
+  updateAnswer,
+  removeAnswer,
+  updateQuestionFlow,
+  removeQuestionFlow,
+} from "../store/quizSlice";
 
 type Answer = {
   answer: string;
@@ -15,79 +21,18 @@ export type Question = {
   id: number;
   question: string;
   type?: "multiSelection" | "singleSelection" | null;
+  renderingConditionType: "simple" | "complex";
+  renderingCondition: string[];
   options: Answer[];
 };
-
-// apply single and multi selection logic
-// set next quesion as current question on submit
-// save answer to the redux
-// render the question
-// add logic to go back
-// in UI show question sentence
-// in UI show options with checkbox
-// in UI show next button
-// in UI show back button
-
-// function QuestionTab({
-//   question = {
-//     id: 10,
-//     question: "What do you want support with?",
-//     type: "multiSelection",
-//     options: [
-//       {
-//         answer: "Yes, book a free call",
-//         next: 0,
-//         priority: 0,
-//       },
-//       {
-//         answer: "Yes, WhatsApp me",
-//         next: 0,
-//         priority: 0,
-//       },
-//       {
-//         answer: "Maybe later",
-//         next: 0,
-//         priority: 0,
-//       },
-//       {
-//         answer: "No thanks",
-//         next: 0,
-//         priority: 0,
-//       },
-//     ],
-//   },
-// }: {
-//   question: Question;
-// }) {
-//   return (
-//     <div className="border border-red-500 h-full w-full flex flex-col gap-10">
-//       <h1 className="text-3xl">{question.question}</h1>
-
-//       <div className="border flex flex-col gap-2">
-//         {question.options.length > 0
-//           ? question.options.map((ans, index) => (
-//               <div key={index}>
-//                 <h1>{ans.answer}</h1>
-//               </div>
-//             ))
-//           : null}
-//       </div>
-
-//       <div className="flex gap-10">
-//         <div className="px-6 py-2 bg-green-500 w-[10%]">Back</div>
-//         <div className="px-6 py-2 bg-green-500 w-[10%]">Next</div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default QuestionTab;
 
 function QuestionTab({
   question = {
     id: 10,
     question: "What1 do you want support with?",
     type: "multiSelection",
+    renderingConditionType: "simple",
+    renderingCondition: [],
     options: [
       {
         answer: "Yes, book a free call",
@@ -121,10 +66,44 @@ function QuestionTab({
   const [next, setNext] = useState<number>(0);
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((store: RootState) => store.quiz.userDetails);
+  const savedAnswers = useSelector((store: RootState) => store.quiz.answers);
+  const quesstionFlow = useSelector(
+    (store: RootState) => store.quiz.questionFlow
+  );
+
+  useEffect(() => {
+    // question.options.forEach((e) => {
+    //   if (savedAnswers.includes(e.answer)) {
+    //     dispatch(removeAnswer(e.answer));
+    //   }
+    // });
+
+    question.options.forEach((e) => {
+      if (savedAnswers.includes(e.answer)) {
+        setCurrentSelecetedAnswers((prev) => [...prev, e]);
+        dispatch(removeAnswer(e.answer));
+      }
+    });
+  }, [savedAnswers, question.options]);
 
   const nextBtnHandler = () => {
+    dispatch(updateQuestionFlow(question.id));
     dispatch(updateCurrentQuestionIndex(next));
+    if (currentSelectedAnswers.length > 0) {
+      currentSelectedAnswers.forEach((e) => {
+        dispatch(updateAnswer(e.answer));
+      });
+    }
+
+    setCurrentSelecetedAnswers([]);
+  };
+
+  const backBtnHandler = () => {
+    if (question.id === 0) return;
+
+    dispatch(removeQuestionFlow());
+    const backQuestionIndex = quesstionFlow.length - 1;
+    dispatch(updateCurrentQuestionIndex(quesstionFlow[backQuestionIndex]));
   };
 
   const answerSelector = (ans: Answer) => {
@@ -144,12 +123,15 @@ function QuestionTab({
 
   useEffect(() => {
     // set the next question
-    const priorities = currentSelectedAnswers.map((e) => e.priority);
-    const maxPriority = Math.max(...priorities);
-    currentSelectedAnswers.forEach((e) => {
-      if (e.priority === maxPriority) setNext(e.next);
-    });
-  }, [currentSelectedAnswers]);
+    if (question.renderingConditionType === "simple") {
+      const priorities = currentSelectedAnswers.map((e) => e.priority);
+      const maxPriority = Math.max(...priorities);
+      currentSelectedAnswers.forEach((e) => {
+        if (e.priority === maxPriority) setNext(e.next);
+      });
+    } else {
+    }
+  }, [currentSelectedAnswers, question.renderingConditionType]);
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -251,7 +233,10 @@ function QuestionTab({
         {/* Navigation Buttons Section */}
         <div className=" 1bg-amber-400 xl:absolute bottom-0 right-0 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center ">
           {/* Back Button */}
-          <button className="group w-full sm:w-auto px-8 py-3 sm:py-4 rounded-xl font-semibold text-base bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 shadow-md min-w-32 relative overflow-hidden">
+          <button
+            onClick={backBtnHandler}
+            className="group w-full sm:w-auto px-8 py-3 sm:py-4 rounded-xl font-semibold text-base bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 shadow-md min-w-32 relative overflow-hidden"
+          >
             <span className="flex items-center justify-center space-x-2 relative z-10">
               <span className="group-hover:-translate-x-1 transition-transform duration-200">
                 ←
@@ -282,10 +267,11 @@ function QuestionTab({
       </div>
 
       <button
-      className="hidden"
+        className=""
         onClick={() => {
-          console.log("answers :", currentSelectedAnswers);
-          console.log("next :", next);
+          // console.log("answers :", savedAnswers);
+          // console.log("current :", currentSelectedAnswers);
+          console.log("flow :", quesstionFlow);
         }}
       >
         Click me

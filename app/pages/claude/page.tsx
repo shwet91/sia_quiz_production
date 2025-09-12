@@ -19,7 +19,7 @@ function QuizPage() {
     (store: RootState) => store.quiz.currentQuestionIndex
   );
   useEffect(() => {
-    console.log("this is logged in main page :", currentIndex);
+    // console.log("this is logged in main page :", currentIndex);
   }, [currentIndex]);
 
   return (

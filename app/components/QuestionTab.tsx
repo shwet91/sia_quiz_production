@@ -101,6 +101,7 @@ function QuestionTab({
   const backBtnHandler = () => {
     if (question.id === 0) return;
 
+    setCurrentSelecetedAnswers([]);
     dispatch(removeQuestionFlow());
     const backQuestionIndex = quesstionFlow.length - 1;
     dispatch(updateCurrentQuestionIndex(quesstionFlow[backQuestionIndex]));

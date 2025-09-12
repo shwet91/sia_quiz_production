@@ -94,8 +94,10 @@ function QuestionTab({
   }, [savedAnswers, question.options]);
 
   const nextBtnHandler = () => {
+    if(quesstionFlow.length === totalFeilds) return;
+
     if (quesstionFlow.length === totalFeilds - 1) {
-      router.push("/pages/Response");
+      // router.push("/pages/Response");
     }
 
     dispatch(updateQuestionFlow(question.id));
@@ -185,21 +187,7 @@ function QuestionTab({
   }, [savedAnswers]);
 
   // Calculate form completion percentage
-  const getCompletionPercentage = () => {
-    let feillds = 12;
-    if (
-      savedAnswers.includes("I am planning for pregnancy") ||
-      savedAnswers.includes(
-        "I am currently pregnant and want to support my body"
-      )
-    ) {
-      feillds = 13;
-      setTotalFeilds(13);
-    }
 
-    // const filledFields = 1;
-    return (quesstionFlow.length / feillds) * 100;
-  };
   return (
     <div className=" w-full max-w-4xl 1mx-auto h-auto 1max-h-[70vh] flex flex-col justify-between p-1 1sm:p-8 1bg-gradient-to-br relative 1overflow-hidden">
       <div className="  relative z-10 flex flex-col justify-between h-full min-h-[400px]">
@@ -211,7 +199,7 @@ function QuestionTab({
               initial={{ width: 0 }}
               // animate={{ width: `${getCompletionPercentage()}%` }}
               animate={{
-                width: `${(quesstionFlow.length / totalFeilds) * 100}%`,
+                width: `${((quesstionFlow.length + 1) / totalFeilds) * 100}%`,
               }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
@@ -229,7 +217,7 @@ function QuestionTab({
           </div>
           <p className="text-center text-sm text-orange-600 font-medium mb-1">
             {/* {Math.round(getCompletionPercentage())} Complete */}
-            {quesstionFlow.length}/{totalFeilds} Complete
+            {quesstionFlow.length + 1}/{totalFeilds} Complete
           </p>
         </motion.div>
 
@@ -311,7 +299,7 @@ function QuestionTab({
           >
             <span className="flex items-center justify-center space-x-2 relative z-10">
               <span>
-                {quesstionFlow.length === totalFeilds - 1 ? "Submit" : "Next"}
+                {quesstionFlow.length >= totalFeilds - 1 ? "Submit" : "Next"}
               </span>
               {/* <span>Next</span> */}
               <span className="group-hover:translate-x-1 transition-transform duration-200">

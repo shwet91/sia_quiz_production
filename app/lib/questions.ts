@@ -93,37 +93,37 @@ export const questions = [
     options: [
       {
         answer: "PCOS/PCOD",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Hypothyroidism",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Insulin resistance",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Hashimoto's",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Endometriosis",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Premature menopause",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
       {
         answer: "Other",
-        next: "q5",
+        next: 4,
         priority: 0,
       },
     ],
@@ -136,94 +136,261 @@ export const questions = [
     options: [
       {
         answer: "PCOS / PCOD",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Thyroid disorders (Hypothyroid, Hashimoto's)",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Menstrual irregularities",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Weight fluctuations",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Endometriosis",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Harmonal Acne",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Menopause (post/peri)",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "Insulin resistance",
-        next: "q5",
+        next: 4,
+        priority: 0,
       },
       {
         answer: "None / Not sure",
-        next: "q4",
+        next: 4,
+        priority: 0,
       },
     ],
   },
 
   {
     id: 4,
+    question: "Do any of these apply to you?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Diagnosed via ultrasound (cysts seen)",
+        next: 5,
+        priority: 0,
+      },
+      {
+        answer: "High AMH",
+        next: 5,
+        priority: 0,
+      },
+      {
+        answer: "High androgens (acne/hair)",
+        next: 5,
+        priority: 0,
+      },
+      {
+        answer: "Diagnosed insulin resistance",
+        next: 5,
+        priority: 0,
+      },
+      {
+        answer: "Not sure",
+        next: 5,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
+    id: 5,
     question:
       "Have you ever been recommended a hormone test, thyroid test, or ultrasound?",
     type: "singleSelection",
     options: [
       {
         answer: "Yes, and did the tests",
-        next: "q5",
+        next: 6,
+        priority: 0,
       },
       {
-        answer: "Yes, but didn't do it",
-        next: "q5",
+        answer: "Yes, but didn`t do it",
+        next: 6,
+        priority: 0,
       },
       {
         answer: "No, never",
-        next: "q5",
+        next: 6,
+        priority: 0,
       },
     ],
   },
 
   {
-    id: "q6",
-    question: "Symptom Duration",
+    id: 6,
+    question: "Do you experience any of these menstrual health symptoms?",
     type: "singleSelection",
     options: [
       {
-        answer: "Less than 3 months",
-        next: "q7",
+        answer: "Irregular cycles (<21 or >35 days)",
+        next: 7,
+        priority: 0,
       },
       {
-        answer: "3 - 12 months",
-        next: "q7",
+        answer: "Very painful periods",
+        next: 7,
+        priority: 0,
       },
       {
-        answer: "1 - 3 years",
-        next: "q7",
+        answer: "Heavy bleeding or clotting",
+        next: 7,
+        priority: 0,
       },
       {
-        answer: "More than 3 years",
-        next: "q7",
+        answer: "Missed periods",
+        next: 7,
+        priority: 0,
       },
       {
-        answer: "Can't remember",
-        next: "q7",
+        answer: "Decreased frequency of menses",
+        next: 7,
+        priority: 0,
+      },
+      {
+        answer: "None of the above",
+        next: 7,
+        priority: 0,
       },
     ],
   },
 
   {
-    id: "q7",
+    id: 7,
+    question: "Do you experience any of these skin & hair symptoms?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Hormonal Acne",
+        next: 8,
+        priority: 0,
+      },
+      {
+        answer: "Hair thinning or hair fall",
+        next: 8,
+        priority: 0,
+      },
+      {
+        answer: "Excess facial or body hair",
+        next: 8,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
+    id: 8,
+    question: "Do you experience any of these energy & mood symptoms?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Constant fatigue / low energy",
+        next: 9,
+        priority: 0,
+      },
+      {
+        answer: "Brain fog",
+        next: 9,
+        priority: 0,
+      },
+      {
+        answer: "Mood swings or irritability",
+        next: 9,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
+    id: 9,
+    question: "Do you experience any of these weight & metabolism symptoms?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Sudden or stubborn weight gain",
+        next: 10,
+        priority: 0,
+      },
+      {
+        answer: "Difficulty losing weight",
+        next: 10,
+        priority: 0,
+      },
+      {
+        answer: "Sugar cravings / feel hangry",
+        next: 10,
+        priority: 0,
+      },
+      {
+        answer: "Frequent bowel movements",
+        next: 10,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
+    id: 10,
+    question: "Do you experience any of these sleep & body symptoms?",
+    type: "singleSelection",
+    options: [
+      {
+        answer: "Trouble falling asleep",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Waking up tired",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Hot flashes or night sweats",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Joint pain or body aches",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Low libido",
+        next: 11,
+        priority: 0,
+      },
+      {
+        answer: "Frequent urination",
+        next: 11,
+        priority: 0,
+      },
+    ],
+  },
+
+  {
+    id: 7,
     question: "Do any of these apply?",
     type: "singleSelection",
     options: [

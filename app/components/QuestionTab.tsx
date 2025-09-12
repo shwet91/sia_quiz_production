@@ -282,6 +282,7 @@ function QuestionTab({
       </div>
 
       <button
+      className="hidden"
         onClick={() => {
           console.log("answers :", currentSelectedAnswers);
           console.log("next :", next);

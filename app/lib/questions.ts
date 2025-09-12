@@ -38,22 +38,22 @@ export const questions = [
     options: [
       {
         answer: "I want to check if I have a hormonal imbalance",
-        next: 11,
+        next: 3,
         priority: 0,
       },
       {
         answer: "I have skin or hair concerns",
-        next: 11,
+        next: 3,
         priority: 0,
       },
       {
         answer: "I am struggling with weight gain",
-        next: 11,
+        next: 3,
         priority: 0,
       },
       {
         answer: "I am planning for pregnancy",
-        next: 11,
+        next: 3,
         priority: 0,
       },
       {

@@ -10,6 +10,7 @@ import {
   updateQuestionFlow,
   removeQuestionFlow,
 } from "../store/quizSlice";
+import { useRouter } from "next/navigation";
 
 type Answer = {
   answer: string;
@@ -68,7 +69,9 @@ function QuestionTab({
   >([]);
 
   const [next, setNext] = useState<number>(0);
+  const [totalFeilds, setTotalFeilds] = useState(12);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const savedAnswers = useSelector((store: RootState) => store.quiz.answers);
   const quesstionFlow = useSelector(
@@ -91,6 +94,10 @@ function QuestionTab({
   }, [savedAnswers, question.options]);
 
   const nextBtnHandler = () => {
+    if (quesstionFlow.length === totalFeilds - 1) {
+      router.push("/pages/Response");
+    }
+
     dispatch(updateQuestionFlow(question.id));
     dispatch(updateCurrentQuestionIndex(next));
     if (currentSelectedAnswers.length > 0) {
@@ -166,11 +173,32 @@ function QuestionTab({
     },
   };
 
+  useEffect(() => {
+    if (
+      savedAnswers.includes("I am planning for pregnancy") ||
+      savedAnswers.includes(
+        "I am currently pregnant and want to support my body"
+      )
+    ) {
+      setTotalFeilds(13);
+    }
+  }, [savedAnswers]);
+
   // Calculate form completion percentage
   const getCompletionPercentage = () => {
-    const requiredFields = ["name", "email", "age", "gender"];
-    const filledFields = 1;
-    return (filledFields / requiredFields.length) * 100;
+    let feillds = 12;
+    if (
+      savedAnswers.includes("I am planning for pregnancy") ||
+      savedAnswers.includes(
+        "I am currently pregnant and want to support my body"
+      )
+    ) {
+      feillds = 13;
+      setTotalFeilds(13);
+    }
+
+    // const filledFields = 1;
+    return (quesstionFlow.length / feillds) * 100;
   };
   return (
     <div className=" w-full max-w-4xl 1mx-auto h-auto 1max-h-[70vh] flex flex-col justify-between p-1 1sm:p-8 1bg-gradient-to-br relative 1overflow-hidden">
@@ -181,7 +209,10 @@ function QuestionTab({
             <motion.div
               className="h-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 rounded-full shadow-lg relative overflow-hidden"
               initial={{ width: 0 }}
-              animate={{ width: `${getCompletionPercentage()}%` }}
+              // animate={{ width: `${getCompletionPercentage()}%` }}
+              animate={{
+                width: `${(quesstionFlow.length / totalFeilds) * 100}%`,
+              }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
               {/* Animated shine effect on progress bar */}
@@ -197,7 +228,8 @@ function QuestionTab({
             </motion.div>
           </div>
           <p className="text-center text-sm text-orange-600 font-medium mb-1">
-            {Math.round(getCompletionPercentage())}% Complete
+            {/* {Math.round(getCompletionPercentage())} Complete */}
+            {quesstionFlow.length}/{totalFeilds} Complete
           </p>
         </motion.div>
 
@@ -278,7 +310,10 @@ function QuestionTab({
             className="group w-full sm:w-auto px-10 py-3 sm:py-4 rounded-xl font-bold text-base bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg min-w-32 relative overflow-hidden"
           >
             <span className="flex items-center justify-center space-x-2 relative z-10">
-              <span>Next</span>
+              <span>
+                {quesstionFlow.length === totalFeilds - 1 ? "Submit" : "Next"}
+              </span>
+              {/* <span>Next</span> */}
               <span className="group-hover:translate-x-1 transition-transform duration-200">
                 →
               </span>

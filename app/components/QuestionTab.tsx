@@ -24,6 +24,8 @@ export type Question = {
   renderingConditionType: "simple" | "complex";
   renderingCondition: string[];
   options: Answer[];
+  conditionalTrueNext: number;
+  conditionalFalseNext: number;
 };
 
 function QuestionTab({
@@ -33,6 +35,8 @@ function QuestionTab({
     type: "multiSelection",
     renderingConditionType: "simple",
     renderingCondition: [],
+    conditionalTrueNext: 12,
+    conditionalFalseNext: 13,
     options: [
       {
         answer: "Yes, book a free call",
@@ -131,8 +135,27 @@ function QuestionTab({
         if (e.priority === maxPriority) setNext(e.next);
       });
     } else {
+      let isConditionTrue = false;
+      question.renderingCondition.forEach((e) => {
+        if (savedAnswers.includes(e)) {
+          isConditionTrue = true;
+        }
+      });
+
+      if (isConditionTrue) {
+        setNext(question.conditionalTrueNext);
+      } else {
+        setNext(question.conditionalFalseNext);
+      }
     }
-  }, [currentSelectedAnswers, question.renderingConditionType]);
+  }, [
+    currentSelectedAnswers,
+    question.renderingConditionType,
+    question.conditionalFalseNext,
+    question.conditionalTrueNext,
+    savedAnswers,
+    question.renderingCondition,
+  ]);
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -268,7 +291,7 @@ function QuestionTab({
       </div>
 
       <button
-        className="hidden"
+        className=""
         onClick={() => {
           console.log("answers :", savedAnswers);
           // console.log("current :", currentSelectedAnswers);

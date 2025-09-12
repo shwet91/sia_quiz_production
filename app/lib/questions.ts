@@ -38,22 +38,22 @@ export const questions = [
     options: [
       {
         answer: "I want to check if I have a hormonal imbalance",
-        next: 3,
+        next: 11,
         priority: 0,
       },
       {
         answer: "I have skin or hair concerns",
-        next: 3,
+        next: 11,
         priority: 0,
       },
       {
         answer: "I am struggling with weight gain",
-        next: 3,
+        next: 11,
         priority: 0,
       },
       {
         answer: "I am planning for pregnancy",
-        next: 3,
+        next: 11,
         priority: 0,
       },
       {
@@ -414,6 +414,8 @@ export const questions = [
       "I am planning for pregnancy",
       "I am currently pregnant and want to support my body",
     ],
+    conditionalTrueNext: 12,
+    conditionalFalseNext: 13,
     options: [
       {
         answer: "Less than 3 months",

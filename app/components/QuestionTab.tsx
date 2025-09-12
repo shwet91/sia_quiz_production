@@ -268,7 +268,7 @@ function QuestionTab({
       </div>
 
       <button
-        className=""
+        className="hidden"
         onClick={() => {
           console.log("answers :", savedAnswers);
           // console.log("current :", currentSelectedAnswers);

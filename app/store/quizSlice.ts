@@ -24,8 +24,8 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
-  currentComponent: "Questions",
-  questionFlow: [],
+  currentComponent: "Details",
+  questionFlow: []
 };
 
 const quizSlice = createSlice({

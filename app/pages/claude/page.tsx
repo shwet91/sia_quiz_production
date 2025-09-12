@@ -148,7 +148,7 @@ function QuizPage() {
             className="  w-full 1lg:w-2/3 1min-h-[300px] bg-gradient-to-br  to-white rounded-2xl p-1 1shadow-lg "
           >
             {/* UserDetails component will be uncommented and rendered here */}
-            {currentComponent === "Questions" ? (
+            {currentComponent === "Details" ? (
               <QuestionTab
                 question={questions[currentIndex] as Question}
               ></QuestionTab>

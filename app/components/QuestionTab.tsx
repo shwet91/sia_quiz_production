@@ -79,12 +79,6 @@ function QuestionTab({
   );
 
   useEffect(() => {
-    // question.options.forEach((e) => {
-    //   if (savedAnswers.includes(e.answer)) {
-    //     dispatch(removeAnswer(e.answer));
-    //   }
-    // });
-
     question.options.forEach((e) => {
       if (savedAnswers.includes(e.answer)) {
         setCurrentSelecetedAnswers((prev) => [...prev, e]);
@@ -93,8 +87,34 @@ function QuestionTab({
     });
   }, [savedAnswers, question.options]);
 
+  function scrollToTop(duration = 600) {
+    const start = window.scrollY;
+    const startTime = performance.now();
+
+    function animate(currentTime : number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Ease-out cubic (can be adjusted)
+      const ease = 1 - Math.pow(1 - progress, 3);
+
+      window.scrollTo(0, start * (1 - ease));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  useEffect(() => {
+    scrollToTop(500);
+  }, [question]);
+
   const nextBtnHandler = () => {
-    if(quesstionFlow.length === totalFeilds) return;
+    if (quesstionFlow.length === totalFeilds) return;
+    if (currentSelectedAnswers.length === 0) return;
 
     if (quesstionFlow.length === totalFeilds - 1) {
       // router.push("/pages/Response");
@@ -314,7 +334,7 @@ function QuestionTab({
       </div>
 
       <button
-        className=""
+        className="hidden"
         onClick={() => {
           console.log("answers :", savedAnswers);
           // console.log("current :", currentSelectedAnswers);

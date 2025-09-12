@@ -24,7 +24,7 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
-  currentComponent: "Questions",
+  currentComponent: "Details",
   questionFlow: []
 };
 

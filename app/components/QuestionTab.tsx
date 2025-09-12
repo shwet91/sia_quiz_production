@@ -1,8 +1,9 @@
 import { div } from "framer-motion/client";
 import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { updateCurrentQuestionIndex } from "../store/quizSlice";
 
 type Answer = {
   answer: string;
@@ -118,10 +119,13 @@ function QuestionTab({
   >([]);
 
   const [next, setNext] = useState<number>(0);
+  const dispatch = useDispatch();
 
   const userDetails = useSelector((store: RootState) => store.quiz.userDetails);
 
-  const nextBtnHandler = () => {};
+  const nextBtnHandler = () => {
+    dispatch(updateCurrentQuestionIndex(next));
+  };
 
   const answerSelector = (ans: Answer) => {
     // set the answer
@@ -199,11 +203,11 @@ function QuestionTab({
           </h1>
 
           {/* Helpful instruction text */}
-          <p className="text-center text-gray-500 text-sm mt-3">
+          {/* <p className="text-center text-gray-500 text-sm mt-3">
             {question.type === "multiSelection"
               ? "You can select multiple options"
               : "Please select one option"}
-          </p>
+          </p> */}
         </div>
 
         {/* Options Section */}

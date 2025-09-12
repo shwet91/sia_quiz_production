@@ -149,7 +149,9 @@ function QuizPage() {
           >
             {/* UserDetails component will be uncommented and rendered here */}
             {currentComponent === "Questions" ? (
-              <QuestionTab question={questions[1] as Question}></QuestionTab>
+              <QuestionTab
+                question={questions[currentIndex] as Question}
+              ></QuestionTab>
             ) : (
               <UserDetails></UserDetails>
             )}
@@ -163,7 +165,7 @@ function QuizPage() {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ delay: 1, duration: 0.7 }}
             className={` ${
-              currentIndex === 69 ? "" : "hidden"
+              currentComponent === "Questions" ? "" : "hidden"
             }  w-full sm:w-1/2 m-auto lg:w-1/3 h-48 md:h-64 lg:h-80 bg-gradient-to-br from-orange-100 via-orange-50 to-white rounded-2xl shadow-lg border border-orange-100 flex items-center justify-center relative overflow-hidden`}
           >
             {/* Decorative background pattern */}

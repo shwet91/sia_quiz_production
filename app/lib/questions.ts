@@ -92,7 +92,7 @@ export const questions = [
     renderingCondition: [],
     options: [
       {
-        answer: "PCOS",
+        answer: "PCOS/PCOD",
         next: "q5",
         priority: 0,
       },
@@ -152,6 +152,10 @@ export const questions = [
       },
       {
         answer: "Endometriosis",
+        next: "q5",
+      },
+      {
+        answer: "Harmonal Acne",
         next: "q5",
       },
       {

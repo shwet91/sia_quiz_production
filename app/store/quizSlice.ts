@@ -30,7 +30,6 @@ const quizSlice = createSlice({
   reducers: {
     updateCurrentQuestionIndex: (state, action: PayloadAction<number>) => {
       state.currentQuestionIndex = action.payload;
-      console.log("recived in payload :", action.payload);
     },
     updateUserDetails: (state, action: PayloadAction<UserDetails>) => {
       state.userDetails = action.payload

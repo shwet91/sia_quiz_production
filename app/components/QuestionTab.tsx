@@ -75,6 +75,7 @@ function QuestionTab({
   const router = useRouter();
 
   const savedAnswers = useSelector((store: RootState) => store.quiz.answers);
+  const userId = useSelector((store: RootState) => store.quiz.userId);
   const quesstionFlow = useSelector(
     (store: RootState) => store.quiz.questionFlow
   );
@@ -113,8 +114,9 @@ function QuestionTab({
     scrollToTop(500);
   }, [question]);
 
-  const nextBtnHandler = () => {
+  const nextBtnHandler = async () => {
     if (quesstionFlow.length === totalFeilds - 1) {
+      if (currentSelectedAnswers.length === 0) return;
       console.log("submit");
 
       // Aplly logic of creating personalised response
@@ -124,8 +126,22 @@ function QuestionTab({
       // navigate
 
       // dispatch(setPersonalisedResponse("This is the personalised Response"))
+
+      const body = {
+        userId,
+        answers: [...savedAnswers, currentSelectedAnswers[0].answer],
+      };
+
+      const response = await fetch("/api/quiz/finalSubmit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const result = await response.json();
       router.push("/pages/Response");
-      console.log(savedAnswers)
+      console.log("the is the response from server :", result);
+      // const payload = [...savedAnswers, currentSelectedAnswers[0].answer];
+
       return;
     }
     if (currentSelectedAnswers.length === 0) return;

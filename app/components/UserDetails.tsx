@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 import "../styles/design.css";
-import { updateCurrentComponent , updateUserDetails } from "../store/quizSlice";
+import {
+  updateCurrentComponent,
+  updateUserDetails,
+  updateUserId,
+} from "../store/quizSlice";
 import { useDispatch } from "react-redux";
 import { motion, Variants } from "framer-motion";
 import "../styles/design.css";
@@ -13,7 +17,7 @@ export interface UserDetails {
   email: string;
   phoneNo: string;
   age: string;
-  gender: string;
+  // gender: string;
   countryCode: string;
 }
 
@@ -33,9 +37,9 @@ const userDetailsSchema = z.object({
     },
     { message: "Age must be between 18 and 100" }
   ),
-  gender: z.enum(["male", "female", ""], {
-    error: "Gender is required",
-  }),
+  // gender: z.enum(["male", "female", ""], {
+  //   error: "Gender is required",
+  // }),
 });
 
 export type UserDetailsSchema = z.infer<typeof userDetailsSchema>;
@@ -46,7 +50,7 @@ function PersonalDetails() {
     email: "",
     phoneNo: "",
     age: "",
-    gender: "",
+    // gender: "",
     countryCode: "+91",
   });
 
@@ -151,18 +155,25 @@ function PersonalDetails() {
     try {
       // Add your server submission logic here
       console.log("Submitting user details:", details);
-      dispatch(updateUserDetails(details))
+      dispatch(updateUserDetails(details));
+      const body = {
+        name: details.name,
+        email: details.email,
+        age: details.age,
+        phoneNo: `${details.countryCode} ${details.phoneNo}`,
+      };
 
-      // Example API call (uncomment when ready):
-      // const response = await fetch('/api/user-details', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(details)
-      // });
-      // const result = await response.json();
+      const response = await fetch("/api/quiz/partialSubmit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const result = await response.json();
+      console.log("the is the response from server :", result);
+      dispatch(updateUserId(result.userId))
 
       // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // await new Promise((resolve) => setTimeout(resolve, 1500));
       dispatch(updateCurrentComponent("Questions"));
 
       // Handle success - redirect to next step or show success message
@@ -188,14 +199,13 @@ function PersonalDetails() {
     return (
       details.name.trim() !== "" &&
       details.email.trim() !== "" &&
-      details.age.trim() !== "" &&
-      details.gender === ""
+      details.age.trim() !== ""
     );
   };
 
   // Calculate form completion percentage
   const getCompletionPercentage = () => {
-    const requiredFields = ["name", "email", "age", "gender"];
+    const requiredFields = ["name", "email", "age"];
     const filledFields = requiredFields.filter(
       (field) => details[field as keyof UserDetails].trim() !== ""
     ).length;
@@ -447,74 +457,6 @@ function PersonalDetails() {
                 {errors.age && (
                   <p className="text-red-500 text-sm">{errors.age}</p>
                 )}
-              </div>
-            </motion.div>
-
-            {/* Gender Selection - Full Width */}
-            <motion.div
-              className=" hidden space-y-1 mb-2"
-              variants={itemVariants}
-            >
-              <div className="  flex items-center justify-center space-x-2 1mb-4">
-                {/* <span className="text-2xl">{fieldConfig.gender.icon}</span> */}
-                <label className="text-sm sm:text-base font-semibold text-gray-700">
-                  {fieldConfig.gender.label}{" "}
-                  {/* <span className="text-orange-500">*</span> */}
-                </label>
-              </div>
-
-              <div className=" flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-                <motion.button
-                  className={`group w-full sm:w-48 px-6 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg relative overflow-hidden ${
-                    details.gender === "male"
-                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white ring-4 ring-orange-200 shadow-orange-200"
-                      : "bg-white text-orange-600 border-2 border-orange-300 hover:bg-orange-50 hover:border-orange-400"
-                  }`}
-                  type="button"
-                  onClick={() => inputHandler("gender", "male")}
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    {/* <span className="text-2xl">👨</span> */}
-                    <span>Male</span>
-                  </div>
-                  {details.gender === "male" && (
-                    <motion.div
-                      className="absolute inset-0 bg-white opacity-20 rounded-xl"
-                      initial={{ scale: 0, opacity: 0.3 }}
-                      animate={{ scale: 1, opacity: 0 }}
-                      transition={{ duration: 0.6 }}
-                    />
-                  )}
-                </motion.button>
-
-                <motion.button
-                  className={`group w-full sm:w-48 px-6 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg relative overflow-hidden ${
-                    details.gender === "female"
-                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white ring-4 ring-orange-200 shadow-orange-200"
-                      : "bg-white text-orange-600 border-2 border-orange-300 hover:bg-orange-50 hover:border-orange-400"
-                  }`}
-                  type="button"
-                  onClick={() => inputHandler("gender", "female")}
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    {/* <span className="text-2xl">👩</span> */}
-                    <span>Female</span>
-                  </div>
-                  {details.gender === "female" && (
-                    <motion.div
-                      className="absolute inset-0 bg-white opacity-20 rounded-xl"
-                      initial={{ scale: 0, opacity: 0.3 }}
-                      animate={{ scale: 1, opacity: 0 }}
-                      transition={{ duration: 0.6 }}
-                    />
-                  )}
-                </motion.button>
               </div>
             </motion.div>
           </div>

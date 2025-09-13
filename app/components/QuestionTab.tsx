@@ -123,8 +123,9 @@ function QuestionTab({
       // set response in the store
       // navigate
 
-      dispatch(setPersonalisedResponse("This is the personalised Response"))
+      // dispatch(setPersonalisedResponse("This is the personalised Response"))
       router.push("/pages/Response");
+      console.log(savedAnswers)
       return;
     }
     if (currentSelectedAnswers.length === 0) return;

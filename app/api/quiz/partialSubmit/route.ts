@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { prisma } from "../../../lib/prisma";
 
 export async function POST(req: Request) {
+  console.log("entered");
   try {
     const body = await req.json();
 
@@ -15,27 +17,29 @@ export async function POST(req: Request) {
     const cleanName = String(name).trim();
     const cleanEmail = String(email).trim().toLowerCase();
 
-
-    const record = {
-      name: cleanName,
-      email,
-      phoneNo,
-      age,
-      createdAt: new Date(),
-    };
-
     // upload on db
     // take the user Id and give it to the client
 
+    const user = await prisma.user.create({
+      data: {
+        name: cleanName,
+        email: cleanEmail,
+        phoneNo,
+        age,
+      },
+    });
+
+    console.log("this is the created user :", user);
+
     return NextResponse.json(
-      { success: true, message: "Data securely saved!" },
+      { success: true, message: "Data securely saved!", userId: user.id },
       { status: 200 }
     );
   } catch (err) {
     console.error("API error:", err);
     return NextResponse.json(
       { success: false, message: "Server error" },
-      { status: 500 }
+      { status: 569 }
     );
   }
 }

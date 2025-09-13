@@ -8,6 +8,7 @@ interface initialState {
   personalisedResponse: string;
   currentComponent: "Details" | "Questions";
   questionFlow: number[];
+  userId: string;
 }
 
 const initialState: initialState = {
@@ -15,7 +16,6 @@ const initialState: initialState = {
     name: "",
     email: "",
     phoneNo: "",
-    gender: "",
     age: "",
     countryCode: "",
   },
@@ -24,6 +24,7 @@ const initialState: initialState = {
   personalisedResponse: "",
   currentComponent: "Questions",
   questionFlow: [],
+  userId: "",
 };
 
 const quizSlice = createSlice({
@@ -60,6 +61,9 @@ const quizSlice = createSlice({
     setPersonalisedResponse: (state, action: PayloadAction<string>) => {
       state.personalisedResponse = action.payload;
     },
+    updateUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload
+    },
   },
 });
 
@@ -72,6 +76,7 @@ export const {
   removeQuestionFlow,
   updateCurrentComponent,
   setPersonalisedResponse,
+  updateUserId
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

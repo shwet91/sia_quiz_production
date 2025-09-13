@@ -22,7 +22,7 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "We will Help you to deal with harmonal health issues",
-  currentComponent: "Questions",
+  currentComponent: "Details",
   questionFlow: [],
   userId: "5",
 };

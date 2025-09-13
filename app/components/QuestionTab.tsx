@@ -1,4 +1,4 @@
-import { div } from "framer-motion/client";
+
 import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -91,7 +91,7 @@ function QuestionTab({
         dispatch(removeAnswer(e.answer));
       }
     });
-  }, [savedAnswers, question.options]);
+  }, [savedAnswers, question.options, dispatch]);
 
   function scrollToTop(duration = 600) {
     const start = window.scrollY;
@@ -133,20 +133,13 @@ function QuestionTab({
         setPersonalisedResponse("We will help you to deal with your pregnancy")
       );
     }
-  }, [question]);
+  }, [question, dispatch, savedAnswers, personalisedResponse]);
 
   const nextBtnHandler = async () => {
     if (quesstionFlow.length === totalFeilds - 1) {
       if (currentSelectedAnswers.length === 0) return;
       console.log("submit");
 
-      // Aplly logic of creating personalised response
-      // send data to the server
-      // clear the store variables
-      // set response in the store
-      // navigate
-
-      // dispatch(setPersonalisedResponse("This is the personalised Response"))
 
       try {
         if (isSubmitting) return;
@@ -404,15 +397,6 @@ function QuestionTab({
                 </span>
               </span>
             )}
-            <span className=" hidden flex items-center justify-center space-x-2 relative z-10">
-              <span>
-                {quesstionFlow.length >= totalFeilds - 1 ? "Submit" : "Next"}
-              </span>
-              {/* <span>Next</span> */}
-              <span className="group-hover:translate-x-1 transition-transform duration-200">
-                →
-              </span>
-            </span>
 
             {/* Button shine effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20" />
@@ -420,16 +404,6 @@ function QuestionTab({
         </div>
       </div>
 
-      <button
-        className="hidden"
-        onClick={() => {
-          console.log("answers :", savedAnswers);
-          // console.log("current :", currentSelectedAnswers);
-          console.log("flow :", quesstionFlow);
-        }}
-      >
-        Click me
-      </button>
     </div>
   );
 }

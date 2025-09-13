@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import "../../styles/design.css";
 import Image from "next/image";
 import { motion } from "framer-motion";
-// import QuestionTab from "@/app/components/QuestionTab";
 import UserDetails from "@/app/components/UserDetails";
 import QuestionTab, { Question } from "@/app/components/QuestionTab";
 import { questions } from "@/app/lib/questions";

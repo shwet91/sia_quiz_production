@@ -21,7 +21,7 @@ export interface UserDetails {
   countryCode: string;
 }
 
-type SubmitType = "partialSubmit" | "finalSubmit";
+
 
 const userDetailsSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters long"),
@@ -106,15 +106,10 @@ function PersonalDetails() {
     },
   };
 
-  const btnHandler = () => {
-    const result = userDetailsSchema.safeParse(details);
-    console.log("errors :", errors);
-    console.log("result :", result);
-    console.log("userDetails :", details);
-  };
+
 
   // Check input validations
-  const validateInput = (submitType: SubmitType) => {
+  const validateInput = () => {
     const result = userDetailsSchema.safeParse(details);
     if (result.success) {
       setErrors({});
@@ -244,18 +239,7 @@ function PersonalDetails() {
     tap: { scale: 0.95 },
   };
 
-  // Floating animation for decorative elements
-  const floatingVariants: Variants = {
-    animate: {
-      y: [0, -8, 0],
-      rotate: [0, 2, 0],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
+
 
   return (
     <motion.div
@@ -328,7 +312,7 @@ function PersonalDetails() {
                     inputHandler("name", e.target.value);
                     // validateInput();
                   }}
-                  onBlur={() => validateInput("partialSubmit")}
+                  onBlur={() => validateInput()}
                 />
                 {errors.name && (
                   <p className="text-red-500 text-sm">{errors.name}</p>
@@ -353,7 +337,7 @@ function PersonalDetails() {
                     inputHandler("email", e.target.value);
                     // validateInput();
                   }}
-                  onBlur={() => validateInput("partialSubmit")}
+                  onBlur={() => validateInput()}
                 />
                 {errors.email && (
                   <p className="text-red-500  text-sm">{errors.email}</p>
@@ -400,7 +384,7 @@ function PersonalDetails() {
                     inputHandler("countryCode", e.target.value);
                     console.log("country code :", value.length);
                   }}
-                  onBlur={() => validateInput("partialSubmit")}
+                  onBlur={() => validateInput()}
                   className=" w-20 sm:w-17 text-gray-800  text-base sm:text-lg border-2 border-orange-200 
                  focus:border-orange-400 1focus:ring-4 focus:ring-orange-100 
                  p-1 rounded-l-xl transition-all duration-300 outline-none 
@@ -420,7 +404,7 @@ function PersonalDetails() {
                     const number = e.target.value.replace(/\D/g, ""); // keep only digits
                     inputHandler("phoneNo", number);
                   }}
-                  onBlur={() => validateInput("partialSubmit")}
+                  onBlur={() => validateInput()}
                 />
               </div>
 
@@ -450,7 +434,7 @@ function PersonalDetails() {
                     inputHandler("age", e.target.value);
                     // validateInput();
                   }}
-                  onBlur={() => validateInput("partialSubmit")}
+                  onBlur={() => validateInput()}
                   min="1"
                   max="150"
                 />

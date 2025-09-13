@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserDetails } from "../components/UserDetails";
-import { number } from "zod";
-import { stat } from "fs";
 
 interface initialState {
   userDetails: UserDetails;

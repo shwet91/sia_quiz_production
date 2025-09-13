@@ -91,7 +91,7 @@ function QuestionTab({
     const start = window.scrollY;
     const startTime = performance.now();
 
-    function animate(currentTime : number) {
+    function animate(currentTime: number) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
@@ -113,11 +113,11 @@ function QuestionTab({
   }, [question]);
 
   const nextBtnHandler = () => {
-    if (quesstionFlow.length === totalFeilds) return;
+    if (quesstionFlow.length === totalFeilds - 1) return;
     if (currentSelectedAnswers.length === 0) return;
 
     if (quesstionFlow.length === totalFeilds - 1) {
-      // router.push("/pages/Response");
+      router.push("/pages/Response");
     }
 
     dispatch(updateQuestionFlow(question.id));

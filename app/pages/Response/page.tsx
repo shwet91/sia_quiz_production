@@ -54,7 +54,7 @@ function Page() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#EAF6FB" }}>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200">
       <motion.div
         className="container mx-auto px-4 py-8 max-w-4xl"
         variants={containerVariants}
@@ -64,27 +64,20 @@ function Page() {
         {/* Header Section */}
         <motion.div className="text-center mb-8" variants={itemVariants}>
           <motion.div
-            className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6"
-            style={{ background: "#4CB7A5" }}
+            className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg"
             variants={floatVariants}
             animate="animate"
           >
             <CheckCircle className="w-12 h-12 text-white" />
           </motion.div>
 
-          <h1
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{ color: "#1D3557" }}
-          >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent">
             Assessment Complete!
           </h1>
 
-          <div
-            className="text-xl  max-w-2xl mx-auto leading-relaxed  p-6 rounded-xl"
-            style={{ background: "#4CB7A5" }}
-          >
+          <div className="text-xl max-w-2xl mx-auto leading-relaxed p-6 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg">
             {personalisedResponse ? (
-              <p className="text-white" >{personalisedResponse}</p>
+              <p className="text-white">{personalisedResponse}</p>
             ) : (
               <p className="text-white">
                 Thank you for trusting us with your health information. Your
@@ -98,20 +91,16 @@ function Page() {
         {/* Success Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-10">
           <motion.div
-            className="bg-white rounded-2xl p-6 shadow-lg border-l-4"
-            style={{ borderLeftColor: "#4CB7A5" }}
+            className="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-orange-500"
             variants={itemVariants}
             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
-                <Shield className="w-8 h-8" style={{ color: "#4CB7A5" }} />
+                <Shield className="w-8 h-8 text-orange-600" />
               </div>
               <div>
-                <h3
-                  className="text-xl font-semibold mb-2"
-                  style={{ color: "#1D3557" }}
-                >
+                <h3 className="text-xl font-semibold mb-2 text-gray-800">
                   Data Securely Stored
                 </h3>
                 <p className="text-gray-600">
@@ -124,23 +113,16 @@ function Page() {
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-2xl p-6 shadow-lg border-l-4"
-            style={{ borderLeftColor: "#4CB7A5" }}
+            className="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-orange-500"
             variants={itemVariants}
             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
-                <MessageCircle
-                  className="w-8 h-8"
-                  style={{ color: "#4CB7A5" }}
-                />
+                <MessageCircle className="w-8 h-8 text-orange-600" />
               </div>
               <div>
-                <h3
-                  className="text-xl font-semibold mb-2"
-                  style={{ color: "#1D3557" }}
-                >
+                <h3 className="text-xl font-semibold mb-2 text-gray-800">
                   WhatsApp Report Sent
                 </h3>
                 <p className="text-gray-600">
@@ -160,17 +142,13 @@ function Page() {
         >
           <div className="text-center mb-8">
             <motion.div
-              className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
-              style={{ background: "#4DB6AC" }}
+              className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 bg-gradient-to-r from-orange-400 to-orange-500 shadow-lg"
               variants={floatVariants}
               animate="animate"
             >
               <Users className="w-8 h-8 text-white" />
             </motion.div>
-            <h2
-              className="text-3xl font-bold mb-4"
-              style={{ color: "#1D3557" }}
-            >
+            <h2 className="text-3xl font-bold mb-4 text-gray-800">
               What Happens Next?
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -205,13 +183,10 @@ function Page() {
                 variants={itemVariants}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
-                <div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4"
-                  style={{ background: "#EAF6FB", color: "#4CB7A5" }}
-                >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 bg-orange-50 text-orange-600 border border-orange-200">
                   {step.icon}
                 </div>
-                <h3 className="font-semibold mb-2" style={{ color: "#1D3557" }}>
+                <h3 className="font-semibold mb-2 text-gray-800">
                   {step.title}
                 </h3>
                 <p className="text-sm text-gray-600">{step.description}</p>
@@ -223,10 +198,7 @@ function Page() {
         {/* Call to Action Section */}
         <motion.div className="text-center" variants={itemVariants}>
           <motion.div
-            className="rounded-3xl p-8 shadow-2xl"
-            style={{
-              background: "linear-gradient(135deg, #4CB7A5 0%, #4DB6AC 100%)",
-            }}
+            className="rounded-3xl p-8 shadow-2xl bg-gradient-to-r from-orange-500 to-orange-600"
             whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -238,8 +210,7 @@ function Page() {
             </p>
 
             <motion.button
-              className="bg-white text-lg font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2"
-              style={{ color: "#1D3557" }}
+              className="bg-white text-lg font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center space-x-2 text-gray-800"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -266,12 +237,12 @@ function Page() {
 
         {/* Footer */}
         <motion.div
-          className="text-center mt-12 pt-8 border-t border-gray-200"
+          className="text-center mt-12 pt-8 border-t border-orange-200"
           variants={itemVariants}
         >
           <p className="text-gray-500">
             Questions? Contact our support team at{" "}
-            <span className="font-semibold" style={{ color: "#4CB7A5" }}>
+            <span className="font-semibold text-orange-600">
               support@healthcare.com
             </span>
           </p>

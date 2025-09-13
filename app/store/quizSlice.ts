@@ -22,7 +22,7 @@ const initialState: initialState = {
   answers: [],
   currentQuestionIndex: 0,
   personalisedResponse: "",
-  currentComponent: "Details",
+  currentComponent: "Questions",
   questionFlow: [],
 };
 

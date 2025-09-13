@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useDebugValue, useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/design.css";
 import { updateCurrentComponent , updateUserDetails } from "../store/quizSlice";
 import { useDispatch } from "react-redux";

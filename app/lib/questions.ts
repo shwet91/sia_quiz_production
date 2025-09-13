@@ -8,7 +8,7 @@ export const questions = [
     options: [
       {
         answer: "Male",
-        next: 1,
+        next: 13,
         priority: 0,
       },
       {

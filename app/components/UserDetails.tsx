@@ -21,8 +21,6 @@ export interface UserDetails {
   countryCode: string;
 }
 
-
-
 const userDetailsSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters long"),
   email: z.email("Invalid email address"),
@@ -106,8 +104,6 @@ function PersonalDetails() {
     },
   };
 
-
-
   // Check input validations
   const validateInput = () => {
     const result = userDetailsSchema.safeParse(details);
@@ -165,11 +161,13 @@ function PersonalDetails() {
       });
       const result = await response.json();
       console.log("the is the response from server :", result);
-      dispatch(updateUserId(result.userId))
+      dispatch(updateUserId(result.userId));
 
       // Simulate API delay
       // await new Promise((resolve) => setTimeout(resolve, 1500));
-      dispatch(updateCurrentComponent("Questions"));
+      if (result.success) {
+        dispatch(updateCurrentComponent("Questions"));
+      }
 
       // Handle success - redirect to next step or show success message
       console.log("Details submitted successfully!");
@@ -238,8 +236,6 @@ function PersonalDetails() {
     },
     tap: { scale: 0.95 },
   };
-
-
 
   return (
     <motion.div

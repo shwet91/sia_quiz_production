@@ -23,7 +23,7 @@ const initialState: initialState = {
   currentQuestionIndex: 0,
   personalisedResponse: "",
   currentComponent: "Details",
-  questionFlow: []
+  questionFlow: [],
 };
 
 const quizSlice = createSlice({
@@ -57,6 +57,9 @@ const quizSlice = createSlice({
     ) => {
       state.currentComponent = action.payload;
     },
+    setPersonalisedResponse: (state, action: PayloadAction<string>) => {
+      state.personalisedResponse = action.payload;
+    },
   },
 });
 
@@ -68,6 +71,7 @@ export const {
   updateQuestionFlow,
   removeQuestionFlow,
   updateCurrentComponent,
+  setPersonalisedResponse,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

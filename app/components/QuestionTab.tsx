@@ -9,6 +9,7 @@ import {
   removeAnswer,
   updateQuestionFlow,
   removeQuestionFlow,
+  setPersonalisedResponse,
 } from "../store/quizSlice";
 import { useRouter } from "next/navigation";
 
@@ -113,12 +114,20 @@ function QuestionTab({
   }, [question]);
 
   const nextBtnHandler = () => {
-    if (quesstionFlow.length === totalFeilds - 1) return;
-    if (currentSelectedAnswers.length === 0) return;
-
     if (quesstionFlow.length === totalFeilds - 1) {
+      console.log("submit");
+
+      // Aplly logic of creating personalised response
+      // send data to the server
+      // clear the store variables
+      // set response in the store
+      // navigate
+
+      dispatch(setPersonalisedResponse("This is the personalised Response"))
       router.push("/pages/Response");
+      return;
     }
+    if (currentSelectedAnswers.length === 0) return;
 
     dispatch(updateQuestionFlow(question.id));
     dispatch(updateCurrentQuestionIndex(next));

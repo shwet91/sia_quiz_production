@@ -71,11 +71,15 @@ function QuestionTab({
 
   const [next, setNext] = useState<number>(0);
   const [totalFeilds, setTotalFeilds] = useState(12);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const savedAnswers = useSelector((store: RootState) => store.quiz.answers);
   const userId = useSelector((store: RootState) => store.quiz.userId);
+  const personalisedResponse = useSelector(
+    (store: RootState) => store.quiz.personalisedResponse
+  );
   const quesstionFlow = useSelector(
     (store: RootState) => store.quiz.questionFlow
   );
@@ -112,6 +116,23 @@ function QuestionTab({
 
   useEffect(() => {
     scrollToTop(500);
+
+    if (
+      personalisedResponse !==
+      "We will Help you to deal with harmonal health issues"
+    )
+      return;
+
+    if (
+      savedAnswers.includes("I am planning for pregnancy") ||
+      savedAnswers.includes(
+        "I am currently pregnant and want to support my body"
+      )
+    ) {
+      dispatch(
+        setPersonalisedResponse("We will help you to deal with your pregnancy")
+      );
+    }
   }, [question]);
 
   const nextBtnHandler = async () => {
@@ -127,20 +148,32 @@ function QuestionTab({
 
       // dispatch(setPersonalisedResponse("This is the personalised Response"))
 
-      const body = {
-        userId,
-        answers: [...savedAnswers, currentSelectedAnswers[0].answer],
-      };
+      try {
+        if (isSubmitting) return;
 
-      const response = await fetch("/api/quiz/finalSubmit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const result = await response.json();
-      router.push("/pages/Response");
-      console.log("the is the response from server :", result);
-      // const payload = [...savedAnswers, currentSelectedAnswers[0].answer];
+        setIsSubmitting(true);
+        const body = {
+          userId,
+          answers: [...savedAnswers, currentSelectedAnswers[0].answer],
+        };
+
+        const response = await fetch("/api/quiz/finalSubmit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          router.push("/pages/Response");
+        }
+
+        console.log("the is the response from server :", result);
+        // const payload = [...savedAnswers, currentSelectedAnswers[0].answer];
+      } catch (error) {
+        console.log("error got from the server :", error);
+        setIsSubmitting(false);
+      }
 
       return;
     }
@@ -341,9 +374,37 @@ function QuestionTab({
           {/* Next Button */}
           <button
             onClick={nextBtnHandler}
-            className="group w-full sm:w-auto px-10 py-3 sm:py-4 rounded-xl font-bold text-base bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg min-w-32 relative overflow-hidden"
+            className={` ${
+              isSubmitting
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700"
+            } group w-full sm:w-auto px-10 py-3 sm:py-4 rounded-xl font-bold text-base  transition-all duration-300 shadow-lg min-w-32 relative overflow-hidden`}
           >
-            <span className="flex items-center justify-center space-x-2 relative z-10">
+            {isSubmitting ? (
+              <div className="flex items-center justify-center space-x-2">
+                <motion.div
+                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 0.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+                <span>Processing...</span>
+              </div>
+            ) : (
+              <span className="flex items-center justify-center space-x-2 relative z-10">
+                <span>
+                  {quesstionFlow.length >= totalFeilds - 1 ? "Submit" : "Next"}
+                </span>
+                {/* <span>Next</span> */}
+                <span className="group-hover:translate-x-1 transition-transform duration-200">
+                  →
+                </span>
+              </span>
+            )}
+            <span className=" hidden flex items-center justify-center space-x-2 relative z-10">
               <span>
                 {quesstionFlow.length >= totalFeilds - 1 ? "Submit" : "Next"}
               </span>

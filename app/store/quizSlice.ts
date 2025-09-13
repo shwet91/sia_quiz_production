@@ -21,10 +21,10 @@ const initialState: initialState = {
   },
   answers: [],
   currentQuestionIndex: 0,
-  personalisedResponse: "",
-  currentComponent: "Details",
+  personalisedResponse: "We will Help you to deal with harmonal health issues",
+  currentComponent: "Questions",
   questionFlow: [],
-  userId: "",
+  userId: "5",
 };
 
 const quizSlice = createSlice({

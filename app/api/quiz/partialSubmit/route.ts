@@ -38,7 +38,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("API error:", err);
     return NextResponse.json(
-      { success: false, message: "Server error" },
+      { success: false, message: err },
       { status: 569 }
     );
   }
